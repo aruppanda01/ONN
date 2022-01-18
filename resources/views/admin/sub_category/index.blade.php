@@ -11,7 +11,7 @@
                     <ul class="breadcrumb p-0">
                         <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="text-white"><i class="fa fa-chevron-right"></i></li>
-                        <li><a href="#" class="active">All Category List</a></li>
+                        <li><a href="#" class="active">All Sub Category List</a></li>
 
                     </ul>
                 </div>
@@ -20,8 +20,8 @@
             <hr>
             <div class="dashboard-body-content">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5>Category List</h5>
-                    <a href="{{ route('admin.category.create') }}" class="actionbutton btn btn-sm">ADD CATEGORY</a>
+                    <h5>Sub Category List</h5>
+                    <a href="{{ route('admin.sub-category.create') }}" class="actionbutton btn btn-sm">ADD SUB CATEGORY</a>
                 </div>
                 <hr>
                 @if (session('success'))
@@ -38,6 +38,7 @@
                             <tr class="text-center">
                                 <th>Serial No</th>
                                 <th>Name</th>
+                                <th>Category</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -47,6 +48,7 @@
                                 <tr class="text-center">
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ Illuminate\Support\Str::limit($category->name, 20)  }}</td>
+                                    <td>{{ $category->category->name}}</td>
                                     <td>
                                         @if ($category->status == 1)
                                             <span class="badge badge-primary">Active</span>
@@ -55,9 +57,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.category.show', $category->id) }}"><i
+                                        <a href="{{ route('admin.sub-category.show', $category->id) }}"><i
                                                 class="far fa-eye"></i></a>
-                                        <a href="{{ route('admin.category.edit', $category->id) }}"
+                                        <a href="{{ route('admin.sub-category.edit', $category->id) }}"
                                             class="ml-2"><i class="far fa-edit"></i></a>
                                         {{-- <a href="javascript:void(0);" class="ml-2" data-toggle="modal"
                                             data-target="#exampleModal" onclick="deleteForm({{ $category->id }})"><i

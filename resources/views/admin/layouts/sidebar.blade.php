@@ -14,6 +14,16 @@
                     <i class="fas fa-list-alt"></i>Category
                 </a>
             </li>
+            <li class="{{ Request::is('admin/sub-category*') ? 'active' : '' }}">
+                <a href="{{ route('admin.sub-category.index') }}">
+                    <i class="fas fa-list-alt"></i>Sub Category
+                </a>
+            </li>
+            <li class="{{ Request::is('admin/product*') ? 'active' : '' }}">
+                <a href="{{ route('admin.product.index') }}">
+                    <i class="fab fa-product-hunt"></i>Products
+                </a>
+            </li>
             <li class="{{ Request::is('admin/change-password') ? 'active' : '' }}">
                 <a href="{{ route('admin.changePassword') }}">
                     <i class="fas fa-user-circle"></i>Profile

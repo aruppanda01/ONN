@@ -18,5 +18,11 @@ Route::group(['middleware' => ['auth','admin']], function () {
      * Category Management
      */
     Route::resource('category',CategoryController::class);
+    Route::resource('sub-category',SubCategoryController::class);
+
+    /**
+     * Product management
+     */
+    Route::resource('product',ProductController::class);
 
 });

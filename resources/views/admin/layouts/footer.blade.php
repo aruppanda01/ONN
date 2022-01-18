@@ -2,9 +2,9 @@
 <script src="{{ asset('admin/js/popper.min.js') }}"></script>
 <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
 <!--Data table-->
-<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/jquery.dataTables.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('admin/css/jquery.dataTables.css') }}">
 
-<script type="text/javascript" charset="utf8" src="{{ asset('frontend/js/jquery.dataTables.js') }}"></script>
+<script type="text/javascript" charset="utf8" src="{{ asset('admin/js/jquery.dataTables.js') }}"></script>
 <style>
     table.dataTable thead .sorting:after,
     table.dataTable thead .sorting_asc:after,

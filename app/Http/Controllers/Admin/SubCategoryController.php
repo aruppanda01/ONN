@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class CategoryController extends Controller
     public function index()
     {
         $data = array();
-        $data['categories'] = Category::latest()->get();
-        return view('admin.category.index')->with($data);
+        $data['categories'] = SubCategory::latest()->get();
+        return view('admin.sub_category.index')->with($data);
     }
 
     /**
@@ -29,7 +30,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $data = array();
+        $data['categories'] = Category::where('status',1)->latest()->get();
+        return view('admin.sub_category.create')->with($data);
     }
 
     /**
@@ -40,25 +43,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-       $this->validate($request,[
-            'name' => 'required|string|max:255|unique:categories',
-            'image' => 'required|mimes:png,jpg,jpeg'
+
+        $this->validate($request,[
+            'name' => 'required|string|max:255|unique:sub_categories',
+            'image' => 'required|mimes:png,jpg,jpeg',
+            'category' => 'required'
        ]);
 
         if($request->hasFile('image')){
             $image = $request->file('image');
-            $imageName = imageUpload($image,'category');
+            $imageName = imageUpload($image,'sub_categories');
         }else{
             $imageName = null;
         }
 
-        $category = new Category();
+        $category = new SubCategory();
         $category->name = $request->name;
         $category->image_path = $imageName;
         $category->slug = Str::slug($request->name);
+        $category->category_id = $request->category;
         $category->status = 1;
         $category->save();
-        return redirect()->route('admin.category.index')->with('success','Category created');
+        return redirect()->route('admin.sub-category.index')->with('success','Sub Category created');
     }
 
     /**
@@ -69,8 +75,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category_details = Category::find($id);
-        return view('admin.category.view',compact('category_details'));
+        $category_details = SubCategory::find($id);
+        return view('admin.sub_category.view',compact('category_details'));
     }
 
     /**
@@ -81,8 +87,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category_details = Category::find($id);
-        return view('admin.category.edit',compact('category_details'));
+        $data = array();
+        $data['category_list'] = Category::where('status',1)->latest()->get();
+        $data['category_details'] = SubCategory::find($id);
+        return view('admin.sub_category.edit')->with($data);
     }
 
     /**
@@ -97,28 +105,30 @@ class CategoryController extends Controller
         $this->validate($request,[
             'name' => 'required|string|max:255',
             'image' => 'nullable|mimes:png,jpg,jpeg',
+            'category' => 'required',
             'status' => 'required'
        ]);
 
-       $category_details = Category::find($id);
+       $category_details = SubCategory::find($id);
 
        if($request->hasFile('image')){
         $image = $request->file('image');
         $image_name = explode('/', $category_details->image_path)[2];
-        if(File::exists('upload/category/'.$image_name)) {
-            File::delete('upload/category/'.$image_name);
+        if(File::exists('upload/sub_categories/'.$image_name)) {
+            File::delete('upload/sub_categories/'.$image_name);
         }
-        $imageName = imageUpload($image,'category');
+        $imageName = imageUpload($image,'sub_categories');
         }else{
             $imageName = $category_details->image_path;
         }
 
+        $category_details->category_id = $request->category;
         $category_details->name = $request->name;
         $category_details->image_path = $imageName;
         $category_details->slug = Str::slug($request->name);
         $category_details->status = $request->status;
         $category_details->save();
-        return redirect()->route('admin.category.index')->with('success','Category details updated');
+        return redirect()->route('admin.sub-category.index')->with('success','Sub Category details updated');
     }
 
     /**
