@@ -24,6 +24,21 @@
                     <i class="fab fa-product-hunt"></i>Products
                 </a>
             </li>
+            <li class="{{ Request::is('admin/available-product-size*') ? 'active' : '' }}">
+                <a href="{{ route('admin.available-product-size.index') }}">
+                    <i class="fab fa-product-hunt"></i>Product Sizes
+                </a>
+            </li>
+            <li class="{{ Request::is('admin/image*') ? 'active' : '' }}">
+                <a href="{{ route('admin.image.index') }}">
+                    <i class="fas fa-image"></i>Image
+                </a>
+            </li>
+            <li class="{{ Request::is('admin/invoice*') ? 'active' : '' }}">
+                <a href="{{ route('admin.invoice.index') }}">
+                    <i class="fas fa-file-invoice"></i>Invoice
+                </a>
+            </li>
             <li class="{{ Request::is('admin/change-password') ? 'active' : '' }}">
                 <a href="{{ route('admin.changePassword') }}">
                     <i class="fas fa-user-circle"></i>Profile

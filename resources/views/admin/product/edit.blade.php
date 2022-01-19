@@ -78,12 +78,13 @@
                                 }
                                 ?>
                                 <select id="choices-multiple-remove-button" class="form-control" name="available_sizes[]" multiple>
-                                    <option value="24" {{ $product_details->available_sizes == 24  ? 'selected' : ''}}>24</option>
-                                    <option value="26" {{ $product_details->available_sizes == 26  ? 'selected' : ''}}>26</option>
-                                    <option value="28" {{ $product_details->available_sizes == 28  ? 'selected' : ''}}>28</option>
-                                    <option value="30" {{ $product_details->available_sizes == 30  ? 'selected' : ''}}>30</option>
-                                    <option value="32" {{ $product_details->available_sizes == 32  ? 'selected' : ''}}>32</option>
-                                    <option value="34" {{ $product_details->available_sizes == 34  ? 'selected' : ''}}>34</option>
+                                    @foreach ($available_product_sizes as $avl_size)
+                                        <option value="{{ $avl_size->size }}" @php
+                                            echo in_array($avl_size->size, $ids) ? 'selected' : '';
+                                        @endphp>
+                                            {{ $avl_size->size }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('available_sizes'))
                                     <span style="color: red;">{{ $errors->first('available_sizes') }}</span>

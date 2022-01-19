@@ -66,12 +66,9 @@
                             <div class="form-group edit-box">
                                 <label for="review">Available Sizes</label>
                                 <select id="choices-multiple-remove-button" class="form-control" name="available_sizes[]" multiple>
-                                    <option value="24" {{ old('available_sizes') == 24  ? 'selected' : ''}}>24</option>
-                                    <option value="26" {{ old('available_sizes') == 26  ? 'selected' : ''}}>26</option>
-                                    <option value="28" {{ old('available_sizes') == 28  ? 'selected' : ''}}>28</option>
-                                    <option value="30" {{ old('available_sizes') == 30  ? 'selected' : ''}}>30</option>
-                                    <option value="32" {{ old('available_sizes') == 32  ? 'selected' : ''}}>32</option>
-                                    <option value="34" {{ old('available_sizes') == 34  ? 'selected' : ''}}>34</option>
+                                    @foreach ($available_product_sizes as $avl_size)
+                                        <option value="{{ $avl_size->size }}">{{ $avl_size->size }}</option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('available_sizes'))
                                     <span style="color: red;">{{ $errors->first('available_sizes') }}</span>

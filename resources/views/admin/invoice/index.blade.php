@@ -11,7 +11,7 @@
                     <ul class="breadcrumb p-0">
                         <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="text-white"><i class="fa fa-chevron-right"></i></li>
-                        <li><a href="#" class="active">All Product List</a></li>
+                        <li><a href="#" class="active">All Invoice List</a></li>
 
                     </ul>
                 </div>
@@ -20,8 +20,8 @@
             <hr>
             <div class="dashboard-body-content">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5>Product List</h5>
-                    <a href="{{ route('admin.product.create') }}" class="actionbutton btn btn-sm">ADD PRODUCT</a>
+                    <h5>Invoice List</h5>
+                    <a href="{{ route('admin.invoice.create') }}" class="actionbutton btn btn-sm">ADD INVOICE</a>
                 </div>
                 <hr>
                 @if (session('success'))
@@ -37,33 +37,29 @@
                         <thead>
                             <tr>
                                 <th>Serial No</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Sub Category</th>
-                                <th>Price(INR)</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $index => $product)
+                            @foreach ($all_invoice_list as $index => $invoice)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ Illuminate\Support\Str::limit($product->name, 20)  }}</td>
-                                <td>{{ $product->category->name }}</td>
-                                <td>{{ $product->sub_category->name }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>{{ $invoice->lat }}</td>
+                                <td>{{ $invoice->lon }}</td>
                                 <td>
-                                    @if ($product->status == 1)
-                                        <span class="badge badge-primary">Active</span>
+                                    @if ($invoice->is_verified == 1)
+                                        <span class="badge badge-primary">Not Verified</span>
                                     @else
-                                        <span class="badge badge-primary">Pending</span>
+                                        <span class="badge badge-primary">Verified</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.product.show', $product->id) }}"><i
+                                    <a href="{{ route('admin.invoice.show', $invoice->id) }}"><i
                                             class="far fa-eye"></i></a>
-                                    <a href="{{ route('admin.product.edit', $product->id) }}"
+                                    <a href="{{ route('admin.invoice.edit', $invoice->id) }}"
                                         class="ml-2"><i class="far fa-edit"></i></a>
                                     {{-- <a href="javascript:void(0);" class="ml-2" data-toggle="modal"
                                         data-target="#exampleModal" onclick="deleteForm({{ $category->id }})"><i

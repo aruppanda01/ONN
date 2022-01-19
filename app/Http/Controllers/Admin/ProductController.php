@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductSize;
 use App\Models\SubCategory;
 use Exception;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ class ProductController extends Controller
         $data = array();
         $data['categories'] = Category::where('status',1)->latest()->get();
         $data['sub_categories'] = SubCategory::where('status',1)->latest()->get();
+        $data['available_product_sizes'] = ProductSize::where('status',1)->latest()->get();
         return view('admin.product.create')->with($data);
     }
 
@@ -100,7 +102,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = array();
+        $data['product_details'] = Product::find($id);
+        return view('admin.product.view')->with($data);
     }
 
     /**
@@ -115,6 +119,7 @@ class ProductController extends Controller
         $data['product_details'] = Product::find($id);
         $data['categories'] = Category::where('status',1)->latest()->get();
         $data['sub_categories'] = SubCategory::where('status',1)->latest()->get();
+        $data['available_product_sizes'] = ProductSize::where('status',1)->latest()->get();
         return view('admin.product.edit')->with($data);
     }
 
