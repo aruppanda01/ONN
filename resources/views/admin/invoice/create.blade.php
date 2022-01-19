@@ -10,18 +10,18 @@
                     <ul class="breadcrumb p-0">
                         <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="text-white"><i class="fa fa-chevron-right"></i></li>
-                        <li><a href="{{ route('admin.image.index') }}">All Image List</a></li>
+                        <li><a href="{{ route('admin.invoice.index') }}">All Invoices List</a></li>
                         <li class="text-white"><i class="fa fa-chevron-right"></i></li>
-                        <li><a href="#" class="active">Add Image</a></li>
+                        <li><a href="#" class="active">Add Invoice</a></li>
                     </ul>
                 </div>
                 @include('admin.layouts.navbar')
             </div>
             <hr>
             <div class="dashboard-body-content">
-                <h5>Add Image</h5>
+                <h5>Add Invoice</h5>
                 <hr>
-                <form action="{{ route('admin.image.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.invoice.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row m-0 pt-3">
                         <div class="col-lg-6">
@@ -36,10 +36,19 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group edit-box">
-                                <label for="review">Image Capture Date<span class="text-danger">*</span></label>
-                                <input type="date" name="capture_date" value="{{ old('capture_date') }}" class="form-control">
-                                @if ($errors->has('capture_date'))
-                                    <span style="color: red;">{{ $errors->first('capture_date') }}</span>
+                                <label for="review">Invoice Date<span class="text-danger">*</span></label>
+                                <input type="date" name="invoice_date" value="{{ old('invoice_date') }}" class="form-control">
+                                @if ($errors->has('invoice_date'))
+                                    <span style="color: red;">{{ $errors->first('invoice_date') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group edit-box">
+                                <label for="review">Amount<span class="text-danger">*</span></label>
+                                <input type="number" name="amount" value="{{ old('amount') }}" class="form-control">
+                                @if ($errors->has('amount'))
+                                    <span style="color: red;">{{ $errors->first('amount') }}</span>
                                 @endif
                             </div>
                         </div>

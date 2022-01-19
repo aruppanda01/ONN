@@ -39,6 +39,7 @@
                                 <th>Serial No</th>
                                 <th>Latitude</th>
                                 <th>Longitude</th>
+                                <th>AMount(INR)</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -49,8 +50,9 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $invoice->lat }}</td>
                                 <td>{{ $invoice->lon }}</td>
+                                <td>{{ $invoice->amount }}</td>
                                 <td>
-                                    @if ($invoice->is_verified == 1)
+                                    @if ($invoice->is_verified == 0)
                                         <span class="badge badge-primary">Not Verified</span>
                                     @else
                                         <span class="badge badge-primary">Verified</span>
