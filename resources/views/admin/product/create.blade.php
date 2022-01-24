@@ -21,14 +21,13 @@
             <div class="dashboard-body-content">
                 <h5>Add Product</h5>
                 <hr>
-                <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data" id="product-form">
                     @csrf
                     <div class="row m-0 pt-3">
                         <div class="col-lg-12">
                             <div class="form-group edit-box">
                                 <label for="review">Name<span class="text-danger">*</span></label>
-                                <input type="text" name="name" class="form-control" id="name"
-                                    value="{{ old('name') }}">
+                                <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
                                 @if ($errors->has('name'))
                                     <span style="color: red;">{{ $errors->first('name') }}</span>
                                 @endif
@@ -62,30 +61,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group edit-box">
-                                <label for="review">Available Sizes</label>
-                                <select id="choices-multiple-remove-button" class="form-control" name="available_sizes[]" multiple>
-                                    @foreach ($available_product_sizes as $avl_size)
-                                        <option value="{{ $avl_size->size }}">{{ $avl_size->size }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('available_sizes'))
-                                    <span style="color: red;">{{ $errors->first('available_sizes') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group edit-box">
-                                <label for="review">Price<span class="text-danger">*</span></label>
-                                <input type="number" id="price" class="form-control" name="price"
-                                    value="{{ old('price') }}" min="1">
-                                @if ($errors->has('price'))
-                                    <span style="color: red;">{{ $errors->first('price') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group edit-box">
                                 <label for="review">Image<span class="text-danger">*</span></label>
                                 <input type="file" id="image" class="form-control" name="image"
@@ -95,6 +71,42 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="row" id="add_multiple_varient">
+                            <div class="col-lg-4">
+                                <div class="form-group edit-box">
+                                    <label for="review">Available Sizes<span class="text-danger">*</span></label>
+                                    <select class="form-control"
+                                        name="addMoreInputFields[0][sizes]">
+                                        <option value="">Select Size</option>
+                                        @foreach ($available_product_sizes as $avl_size)
+                                            <option value="{{ $avl_size->size }}">{{ $avl_size->size }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger size_err"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group edit-box">
+                                    <label for="review">Colour<span class="text-danger">*</span></label>
+                                    <input type="text" id="colors" class="form-control"
+                                        name="addMoreInputFields[0][colors]" value="{{ old('colors') }}" min="1">
+                                    <span class="text-danger color_err"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group edit-box">
+                                    <label for="review">Price<span class="text-danger">*</span></label>
+                                    <input type="number" id="price" class="form-control"
+                                        name="addMoreInputFields[0][price]" value="{{ old('price') }}" min="1">
+                                    <span class="text-danger price_err"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" id="add_varient"><i class="fa fa-plus"></i> Add</button>
+                        </div>
+
+
                         <div class="col-lg-12">
                             <div class="form-group edit-box">
                                 <label for="description">Description<span class="text-danger">*</span></label>
@@ -106,26 +118,11 @@
                         </div>
                     </div>
                     <div class="form-group d-flex justify-content-end">
-                        <button type="submit" class="actionbutton">SAVE</button>
+                        <button type="submit" class="actionbutton" id="btn_submit">SAVE</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script>
-            $(document).ready(function () {
-
-            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
-                removeItemButton: true,
-                // maxItemCount:5,
-                // searchResultLimit:5,
-                // renderChoiceLimit:5
-
-            });
-            $('.student_ids').select2();
-            // var validated = false;
-            // $('.error').hide();
-            });
-        CKEDITOR.replace('description');
-    </script>
+    @include('admin.product.product_js')
 @endsection
